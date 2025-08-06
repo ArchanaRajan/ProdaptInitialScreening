@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Redirecting...</title>
+    <script>
+        (function () {
+          const params = new URLSearchParams(window.location.search);
+          const rawInput = params.get("input");
+
+          if (rawInput) {
+            const encoded = encodeURIComponent(rawInput);
+            window.location.href = `/remove?input=${encoded}`;
+          } else {
+            document.body.innerHTML = "<h3>Error: Missing 'input' in URL</h3>";
+          }
+        })();
+    </script>
+    <!-- <script>
+         window.onpageshow = function () {
+           const params = new URLSearchParams(window.location.search);
+           const rawInput = params.get("input");
+
+           if (rawInput) {
+             const encodedInput = encodeURIComponent(rawInput);
+             // Redirect to controller with encoded input
+             window.location.href = `/remove?input=${encodedInput}`;
+           } else {
+             document.body.innerHTML = "<h3>Error: Missing 'input' in URL</h3>";
+           }
+         };
+     </script>-->
+</head>
+<body>
+<h3>Redirecting...</h3>
+</body>
+</html>
