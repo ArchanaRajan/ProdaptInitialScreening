@@ -20,6 +20,7 @@ public class DemoController {
         }
 
         String result = input.substring(1, input.length() - 1);
-        return ResponseEntity.ok(result);
+        String output = result.replaceAll("[^a-zA-Z0-9%]", "_");
+        return ResponseEntity.ok(output);
     }
 }
