@@ -12,7 +12,7 @@ public class DemoController {
     public ResponseEntity<String> removeFirstAndLastCharacter(@RequestParam String input) {
 
         if (input == null || input.length() < 2) {
-            return ResponseEntity.badRequest().body("Bad Request Response");
+            return ResponseEntity.badRequest().body("Input must be at least 2 characters");
         }
 
         if (input.length() == 2) {
