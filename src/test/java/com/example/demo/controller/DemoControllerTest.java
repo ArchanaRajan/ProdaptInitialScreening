@@ -1,8 +1,10 @@
 package com.example.demo.controller;
 
+import static org.hamcrest.Matchers.is;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
 import org.junit.jupiter.params.provider.ValueSource;
@@ -29,5 +31,49 @@ class DemoControllerTest {
     @Autowired
     private MockMvc mockMvc;
 
-    // add your test cases here
+    @Test
+    public void testRemoveFirstAndLastCharacter() throws Exception {
+        mockMvc.perform(get("/remove").param("input", "eloquent"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("loquen"));
+
+        mockMvc.perform(get("/remove").param("input", "country"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("ountr"));
+
+        mockMvc.perform(get("/remove").param("input", "person"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("erso"));
+
+        mockMvc.perform(get("/remove").param("input", "xyz"))
+                .andExpect(status().isOk())
+                .andExpect(content().string("y"));
+    }
+
+    @Test
+    public void test2Characters() throws Exception {
+        mockMvc.perform(get("/remove").param("input", "ab"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(""));
+    }
+
+    @Test
+    public void test1Character() throws Exception {
+        mockMvc.perform(get("/remove").param("input", "a"))
+                .andExpect(status().isBadRequest());
+
+    }
+
+    @Test
+    public void testEmptyString() throws Exception {
+        mockMvc.perform(get("/remove").param("input", ""))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testSpecialCharacters() throws Exception {
+        mockMvc.perform(get("/remove").param("input", "*123*%qwerty+"))
+                .andExpect(status().isOk())
+                .andExpect(content().string(is("123_%qwerty")));
+    }
 }
